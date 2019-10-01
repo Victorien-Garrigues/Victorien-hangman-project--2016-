@@ -1,0 +1,106 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+
+
+
+public class HangMan {
+	public static void main(String[] args) throws IOException {
+		 
+		String [] mot = new String [100]; // changer si +de mots dans liste
+		int nb1;
+		String motfich;
+		String ligne;
+			nb1 = 0;
+			motfich =Saisie.lire_chaine("Nom du fichier : ");
+		  	BufferedReader entree = new BufferedReader (new FileReader (motfich));
+		  	do {
+		  		ligne = entree.readLine();
+		  			if (ligne != null) {
+		  				mot[nb1]=ligne;
+		  				nb1 = nb1+1;			
+		  			}
+		  	}
+		  	while (ligne != null);
+		  	entree.close();
+		  	nb1 = nb1 - 1;
+		  	
+	int rand = 1+(int)(Math.random()*100); // changer si +de mots dans liste
+	String test = mot[rand];
+	String[] mot1 = test.split("(?!^)");
+	int count = 0;
+	for(String car : mot1) {
+	    if(car != null) {
+	        count++;
+	    }
+	}
+	
+	String [] mot2 = new String [count];
+	String f = "_";
+	Arrays.fill(mot2, f);
+	
+	
+	int nb = count;
+	int mal = 0;
+	int a = 0;
+	int num;
+	int vies;
+	int result = 0;
+	boolean check;
+	
+	do {
+	check = false;
+	System.out.println(Arrays.toString(mot2));
+	String Choix = Saisie.lire_chaine("Choisissez une lettre : ");
+
+	for (num = 0; num <= nb-1; num++) {   
+		result = Choix.compareTo( mot1[num] );
+		if (result == 0){
+			mot2[num] = Choix;
+			a++;	
+			check = true;
+		}
+		
+	}
+	if (check == false){
+		mal=mal+1;
+	}
+	vies = 5 - mal;
+	System.out.println("vous avez " +vies+ " vies sur 5");
+	System.out.println();
+	}
+	while (vies > 0 && a < nb && mal < 5);
+	 
+	if (vies == 0){
+		System.out.println();
+		System.out.println();
+		System.out.println("le mot était : "+Arrays.toString(mot1));
+		System.out.println("VOUS AVEZ PERDU");
+		
+		
+		System.out.println(" ,-----,");
+		System.out.println(" o     |");
+		System.out.println("/|l    |");
+		System.out.println("/|     | ");
+		System.out.println("_______|_");
+	}
+	
+	if (a == nb){
+		System.out.println();
+		System.out.println();
+		System.out.println(Arrays.toString(mot1));
+		System.out.println("VOUS AVEZ GAGNÉ");
+		
+		System.out.println("  ,-----,");
+		System.out.println("        |");
+		System.out.println("  lo/   |");
+		System.out.println("   |_,  |");
+		System.out.println("__/_____|_");
+	}
+	
+	//list.forEach(System.out::println);
+
+	
+}
+}
